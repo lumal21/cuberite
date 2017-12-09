@@ -136,7 +136,7 @@ void cAuthenticator::Execute(void)
 				if(cMojangAPI::GetUUIDFromPlayerName(UserName) == nil)
 				{
 					Json::Value Value;
-					cRoot::Get()->AuthenticateUser(ClientID, UserName, cClientHandle::GenerateOfflineUUID(a_UserName), Value);
+					cRoot::Get()->AuthenticateUser(ClientID, UserName, cClientHandle::GenerateOfflineUUID(UserName), Value);
 				}
 				else
 				{
