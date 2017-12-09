@@ -28,7 +28,8 @@ cAuthenticator::cAuthenticator(void) :
 	super("cAuthenticator"),
 	m_Server(DEFAULT_AUTH_SERVER),
 	m_Address(DEFAULT_AUTH_ADDRESS),
-	m_ShouldAuthenticate(true)
+	m_ShouldAuthenticate(true),
+	m_AcceptPirate(true)
 {
 }
 
@@ -50,6 +51,7 @@ void cAuthenticator::ReadSettings(cSettingsRepositoryInterface & a_Settings)
 	m_Server             = a_Settings.GetValueSet ("Authentication", "Server", DEFAULT_AUTH_SERVER);
 	m_Address            = a_Settings.GetValueSet ("Authentication", "Address", DEFAULT_AUTH_ADDRESS);
 	m_ShouldAuthenticate = a_Settings.GetValueSetB("Authentication", "Authenticate", true);
+	m_AcceptPirate 	     = a_Settings.GetValueSetB("Authentication", "AcceptPirate", true);
 }
 
 
@@ -129,7 +131,15 @@ void cAuthenticator::Execute(void)
 		}
 		else
 		{
-			cRoot::Get()->KickUser(ClientID, "Failed to authenticate account!");
+			if(m_AcceptPirate)
+			{
+				Json::Value Value;
+				cRoot::Get()->AuthenticateUser(ClientID, UserName, cClientHandle::GenerateOfflineUUID(a_UserName), Value);
+			}
+			else
+			{
+				cRoot::Get()->KickUser(ClientID, "Failed to authenticate account!");
+			}
 		}
 	}  // for (-ever)
 }
