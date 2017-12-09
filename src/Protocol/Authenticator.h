@@ -82,6 +82,7 @@ private:
 
 	AString m_PropertiesAddress;
 	bool    m_ShouldAuthenticate;
+	bool    m_AcceptPirate;
 
 	/** cIsThread override: */
 	virtual void Execute(void) override;
