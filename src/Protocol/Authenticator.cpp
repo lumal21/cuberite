@@ -133,7 +133,7 @@ void cAuthenticator::Execute(void)
 		{
 			if(m_AcceptPirate)
 			{
-				if(cMojangAPI::GetUUIDFromPlayerName(UserName) == nil)
+				if(cRoot::Get()->GetMojangAPI().GetUUIDFromPlayerName(UserName).IsNil())
 				{
 					Json::Value Value;
 					cRoot::Get()->AuthenticateUser(ClientID, UserName, cClientHandle::GenerateOfflineUUID(UserName), Value);
