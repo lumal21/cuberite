@@ -133,8 +133,15 @@ void cAuthenticator::Execute(void)
 		{
 			if(m_AcceptPirate)
 			{
-				Json::Value Value;
-				cRoot::Get()->AuthenticateUser(ClientID, UserName, cClientHandle::GenerateOfflineUUID(a_UserName), Value);
+				if(cMojangAPI::GetUUIDFromPlayerName(UserName) == nil)
+				{
+					Json::Value Value;
+					cRoot::Get()->AuthenticateUser(ClientID, UserName, cClientHandle::GenerateOfflineUUID(a_UserName), Value);
+				}
+				else
+				{
+					cRoot::Get()->KickUser(ClientID, "Nome de usuário proibido para jogadores piratas!");
+				}
 			}
 			else
 			{
